@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #f8fafc;
+  color: #0f172a;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+}
+
+/* ---------- Scrollbar ---------- */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e2e8f0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #06b6d4, #2563eb);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #0891b2, #1d4ed8);
+}
+
+/* ---------- Glass Effect ---------- */
+
+.glass {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ---------- Premium Shadow ---------- */
+
+.shadow-premium {
+  box-shadow:
+    0 10px 40px rgba(37, 99, 235, 0.18),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- Hover Animation ---------- */
+
+.hover-card {
+  transition: all 0.35s ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-8px);
+}
+
+/* ---------- Animated Gradient ---------- */
+
+.gradient-bg {
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #06b6d4,
+    #3b82f6
+  );
+  background-size: 300% 300%;
+  animation: gradientMove 8s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ---------- Fade Animation ---------- */
+
+.fade-in {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
