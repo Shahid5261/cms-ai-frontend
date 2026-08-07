@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { motion } from "framer-motion";
+import API from "../api";
 
 import {
   Chart as ChartJS,
@@ -32,13 +32,14 @@ export default function AnalyticsCharts({ refresh }) {
 
   const loadCharts = async () => {
     try {
-      const res = await axios.get(
-        "http://127.0.0.1:8000/complaints/"
-      );
+      const res = await API.get("/complaints/");
 
       setComplaints(res.data);
     } catch (err) {
-      console.log(err);
+      console.error(
+        "Failed to load complaints for analytics:",
+        err
+      );
     }
   };
 
@@ -59,7 +60,6 @@ export default function AnalyticsCharts({ refresh }) {
     datasets: [
       {
         label: "Complaints",
-
         data: Object.values(categoryCounts),
 
         backgroundColor: [
@@ -72,7 +72,6 @@ export default function AnalyticsCharts({ refresh }) {
         ],
 
         borderRadius: 12,
-
         borderSkipped: false,
       },
     ],
@@ -92,9 +91,7 @@ export default function AnalyticsCharts({ refresh }) {
         ],
 
         hoverOffset: 25,
-
         borderColor: "#fff",
-
         borderWidth: 4,
       },
     ],
@@ -102,7 +99,6 @@ export default function AnalyticsCharts({ refresh }) {
 
   const barOptions = {
     responsive: true,
-
     maintainAspectRatio: false,
 
     plugins: {
@@ -130,7 +126,6 @@ export default function AnalyticsCharts({ refresh }) {
 
   const pieOptions = {
     responsive: true,
-
     maintainAspectRatio: false,
 
     plugins: {
@@ -148,15 +143,15 @@ export default function AnalyticsCharts({ refresh }) {
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 my-10">
 
+      {/* Complaint Categories */}
+
       <motion.div
         initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
         whileHover={{ y: -6 }}
         className="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden"
       >
-
         <div className="bg-gradient-to-r from-cyan-600 to-blue-700 px-6 py-5">
-
           <h2 className="text-2xl font-bold text-white">
             Complaint Categories
           </h2>
@@ -164,19 +159,17 @@ export default function AnalyticsCharts({ refresh }) {
           <p className="text-cyan-100 mt-1">
             Distribution by category
           </p>
-
         </div>
 
         <div className="h-[420px] p-6">
-
           <Bar
             data={barData}
             options={barOptions}
           />
-
         </div>
-
       </motion.div>
+
+      {/* Severity Analysis */}
 
       <motion.div
         initial={{ opacity: 0, y: 25 }}
@@ -185,9 +178,7 @@ export default function AnalyticsCharts({ refresh }) {
         transition={{ delay: 0.15 }}
         className="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden"
       >
-
         <div className="bg-gradient-to-r from-pink-600 to-red-600 px-6 py-5">
-
           <h2 className="text-2xl font-bold text-white">
             Severity Analysis
           </h2>
@@ -195,18 +186,14 @@ export default function AnalyticsCharts({ refresh }) {
           <p className="text-pink-100 mt-1">
             AI classified complaint severity
           </p>
-
         </div>
 
         <div className="h-[420px] flex items-center justify-center p-6">
-
           <Pie
             data={pieData}
             options={pieOptions}
           />
-
         </div>
-
       </motion.div>
 
     </div>

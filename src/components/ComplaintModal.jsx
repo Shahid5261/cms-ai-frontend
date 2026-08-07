@@ -1,28 +1,25 @@
 import React from "react";
+import API from "../api";
 
 export default function ComplaintModal({ complaint, onClose }) {
   if (!complaint) return null;
 
   const sendEmail = async () => {
     try {
-      const res = await fetch(
-        `http://127.0.0.1:8000/complaints/${complaint.id}/send-email`,
-        {
-          method: "POST",
-        }
+      const res = await API.post(
+        `/complaints/${complaint.id}/send-email`
       );
 
-      const data = await res.json();
-
-      alert(data.message);
+      alert(res.data.message);
     } catch (error) {
+      console.error("Failed to send email:", error);
       alert("Failed to send email.");
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl shadow-xl w-11/12 md:w-3/4 lg:w-1/2 p-6 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto p-8">
 
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">
@@ -40,19 +37,23 @@ export default function ComplaintModal({ complaint, onClose }) {
         <div className="space-y-4">
 
           <div>
-            <strong>Customer:</strong> {complaint.customer_name}
+            <strong>Customer:</strong>{" "}
+            {complaint.customer_name}
           </div>
 
           <div>
-            <strong>Email:</strong> {complaint.email}
+            <strong>Email:</strong>{" "}
+            {complaint.email}
           </div>
 
           <div>
-            <strong>Product:</strong> {complaint.product}
+            <strong>Product:</strong>{" "}
+            {complaint.product}
           </div>
 
           <div>
-            <strong>Status:</strong> {complaint.status}
+            <strong>Status:</strong>{" "}
+            {complaint.status}
           </div>
 
           <hr />
@@ -74,11 +75,13 @@ export default function ComplaintModal({ complaint, onClose }) {
           </div>
 
           <div>
-            <strong>Category:</strong> {complaint.category}
+            <strong>Category:</strong>{" "}
+            {complaint.category}
           </div>
 
           <div>
-            <strong>Severity:</strong> {complaint.severity}
+            <strong>Severity:</strong>{" "}
+            {complaint.severity}
           </div>
 
           <div>
